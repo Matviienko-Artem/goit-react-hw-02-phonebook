@@ -40,7 +40,7 @@ class App extends Component {
 
         {/* <Filter /> */}
 
-        <ContactList />
+        <ContactList data={this.state.contacts} />
       </div>
     );
   }
