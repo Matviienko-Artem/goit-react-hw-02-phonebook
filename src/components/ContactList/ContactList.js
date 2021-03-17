@@ -1,10 +1,10 @@
 import React from 'react';
 
-const ContactList = ({ data }) => {
+const ContactList = ({ contacts }) => {
   return (
     <div>
       <ul>
-        {data.map(contact => {
+        {contacts.map(contact => {
           return (
             <li key={contact.id}>
               {contact.name}: {contact.number}

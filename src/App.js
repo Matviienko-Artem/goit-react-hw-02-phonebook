@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import ContactForm from './components/ContactForm/ContactForm';
 import ContactList from './components/ContactList/ContactList';
+import Filter from './components/Filter/Filter';
 import { v4 as uuidv4 } from 'uuid';
-// import Filter from './components/Filter/Filter';
 
 class App extends Component {
   state = {
@@ -22,14 +22,31 @@ class App extends Component {
       number: data.number,
     };
 
-    this.setState(prevState => ({
-      contacts: [newContact, ...prevState.contacts],
-    }));
-    console.log(data);
-    console.log(this.state.contacts);
+    if (newContact.name === '') {
+      alert('Вы забыли ввести имя контакта');
+    } else if (newContact.number === '') {
+      alert('Вы забыли ввести номер контакта');
+    } else {
+      this.setState(prevState => ({
+        contacts: [newContact, ...prevState.contacts],
+      }));
+    }
+  };
+
+  onFilter = value => {
+    this.setState({ filter: value.currentTarget.value });
+  };
+
+  filterOfContacts = () => {
+    const { contacts, filter } = this.state;
+
+    return contacts.filter(contact =>
+      contact.name.toLowerCase().includes(filter.toLocaleLowerCase()),
+    );
   };
 
   render() {
+    const { filter } = this.state;
     return (
       <div>
         <h1>Phonebook</h1>
@@ -38,9 +55,9 @@ class App extends Component {
 
         <h2>Contacts</h2>
 
-        {/* <Filter /> */}
+        <Filter value={filter} onFilter={this.onFilter} />
 
-        <ContactList data={this.state.contacts} />
+        <ContactList contacts={this.filterOfContacts()} />
       </div>
     );
   }

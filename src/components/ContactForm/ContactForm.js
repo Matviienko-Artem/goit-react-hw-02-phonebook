@@ -35,6 +35,7 @@ class ContactForm extends Component {
           <input
             type="text"
             name="name"
+            placeholder="Your name"
             value={name}
             onChange={this.handleChange}
           ></input>
@@ -44,6 +45,7 @@ class ContactForm extends Component {
           <input
             type="text"
             name="number"
+            placeholder="111-11-11"
             value={number}
             onChange={this.handleChange}
           ></input>
