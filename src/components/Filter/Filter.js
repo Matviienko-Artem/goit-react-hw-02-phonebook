@@ -1,15 +1,16 @@
 import React from 'react';
+import style from './Filter.module.css';
 
 const Filter = ({ value, onFilter }) => {
   return (
     <div>
       <label>
-        Find contacts by name
+        <b>Find contacts by name:</b>
         <input
-          // className={}
+          className={style.input}
           type="text"
           name="filter"
-          placeholder="Name"
+          placeholder="Rosie Simpson"
           value={value}
           onChange={onFilter}
         />

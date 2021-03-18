@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ContactForm from './components/ContactForm/ContactForm';
 import ContactList from './components/ContactList/ContactList';
 import Filter from './components/Filter/Filter';
+import style from './components/ContactForm/ContactForm.module.css';
 import { v4 as uuidv4 } from 'uuid';
 
 class App extends Component {
@@ -16,16 +17,24 @@ class App extends Component {
   };
 
   addNewContact = data => {
+    const { contacts } = this.state;
+
     const newContact = {
       id: uuidv4(),
       name: data.name,
       number: data.number,
     };
 
+    const uniaqueName = contacts.find(
+      contact => contact.name.toLowerCase() === newContact.name.toLowerCase(),
+    );
+
     if (newContact.name === '') {
       alert('Вы забыли ввести имя контакта');
     } else if (newContact.number === '') {
       alert('Вы забыли ввести номер контакта');
+    } else if (uniaqueName) {
+      alert(`${newContact.name} уже есть в списке`);
     } else {
       this.setState(prevState => ({
         contacts: [newContact, ...prevState.contacts],
@@ -45,10 +54,16 @@ class App extends Component {
     );
   };
 
+  deleteContact = contactId => {
+    this.setState(prevState => ({
+      contacts: prevState.contacts.filter(contact => contact.id !== contactId),
+    }));
+  };
+
   render() {
     const { filter } = this.state;
     return (
-      <div>
+      <div className={style.container}>
         <h1>Phonebook</h1>
 
         <ContactForm onSubmit={this.addNewContact} />
@@ -57,7 +72,10 @@ class App extends Component {
 
         <Filter value={filter} onFilter={this.onFilter} />
 
-        <ContactList contacts={this.filterOfContacts()} />
+        <ContactList
+          contacts={this.filterOfContacts()}
+          ondeleteContact={this.deleteContact}
+        />
       </div>
     );
   }
