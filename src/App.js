@@ -16,6 +16,21 @@ class App extends Component {
     filter: '',
   };
 
+  componentDidMount() {
+    const contacts = localStorage.getItem('contacts');
+    const parseContacts = JSON.parse(contacts);
+
+    if (parseContacts) {
+      this.setState({ contacts: parseContacts });
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.contacts !== prevState.contacts) {
+      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+    }
+  }
+
   addNewContact = data => {
     const { contacts } = this.state;
 
@@ -62,6 +77,7 @@ class App extends Component {
 
   render() {
     const { filter } = this.state;
+
     return (
       <div className={style.container}>
         <h1>Phonebook</h1>
