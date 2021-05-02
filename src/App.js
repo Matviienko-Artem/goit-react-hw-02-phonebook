@@ -61,7 +61,7 @@ class App extends Component {
     this.setState({ filter: value.currentTarget.value });
   };
 
-  filterOfContacts = () => {
+  filterOfContactsByName = () => {
     const { contacts, filter } = this.state;
 
     return contacts.filter(contact =>
@@ -73,6 +73,7 @@ class App extends Component {
     this.setState(prevState => ({
       contacts: prevState.contacts.filter(contact => contact.id !== contactId),
     }));
+    // this.setState({ filter: '' }); --- надо подумать, будет ли очищатся форма после удаления или нет
   };
 
   render() {
@@ -89,7 +90,7 @@ class App extends Component {
         <Filter value={filter} onFilter={this.onFilter} />
 
         <ContactList
-          contacts={this.filterOfContacts()}
+          contacts={this.filterOfContactsByName()}
           ondeleteContact={this.deleteContact}
         />
       </div>
